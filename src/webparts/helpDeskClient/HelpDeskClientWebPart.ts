@@ -1,21 +1,30 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import { Version } from "@microsoft/sp-core-library";
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+} from "@microsoft/sp-property-pane";
+import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
-import * as strings from 'HelpDeskClientWebPartStrings';
-import HelpDeskClient from './components/HelpDeskClient';
-import { IHelpDeskClientProps } from './components/IHelpDeskClientProps';
+import * as strings from "HelpDeskClientWebPartStrings";
+import HelpDeskClient from "./components/HelpDeskClient";
+import { IHelpDeskClientProps } from "./components/IHelpDeskClientProps";
+import { sp } from "@pnp/sp";
 
 export interface IHelpDeskClientWebPartProps {
   description: string;
 }
 
-export default class HelpDeskClientWebPart extends BaseClientSideWebPart <IHelpDeskClientWebPartProps> {
+export default class HelpDeskClientWebPart extends BaseClientSideWebPart<
+  IHelpDeskClientWebPartProps
+> {
+  public async onInit(): Promise<void> {
+    await super.onInit();
+    sp.setup({
+      spfxContext: this.context
+    });
+  }
 
   public render(): void {
     const element: React.ReactElement<IHelpDeskClientProps> = React.createElement(
@@ -33,7 +42,7 @@ export default class HelpDeskClientWebPart extends BaseClientSideWebPart <IHelpD
   }
 
   protected get dataVersion(): Version {
-    return Version.parse('1.0');
+    return Version.parse("1.0");
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
@@ -47,7 +56,7 @@ export default class HelpDeskClientWebPart extends BaseClientSideWebPart <IHelpD
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
+                PropertyPaneTextField("description", {
                   label: strings.DescriptionFieldLabel
                 })
               ]
