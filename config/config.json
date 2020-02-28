@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "help-desk-client-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/helpDeskClient/HelpDeskClientWebPart.js",
+          "manifest": "./src/webparts/helpDeskClient/HelpDeskClientWebPart.manifest.json"
+        }
+      ]
+    },
+    "help-desk-manager-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/helpDeskManager/HelpDeskManagerWebPart.js",
+          "manifest": "./src/webparts/helpDeskManager/HelpDeskManagerWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "HelpDeskClientWebPartStrings": "lib/webparts/helpDeskClient/loc/{locale}.js",
+    "HelpDeskManagerWebPartStrings": "lib/webparts/helpDeskManager/loc/{locale}.js"
+  }
+}

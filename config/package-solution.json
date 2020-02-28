@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "sp-helpdesk-client-side-solution",
+    "id": "1823d64d-52a3-4344-a3a4-9e65b2a3b6df",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false
+  },
+  "paths": {
+    "zippedPackage": "solution/sp-helpdesk.sppkg"
+  }
+}
