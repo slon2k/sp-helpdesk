@@ -8,9 +8,9 @@ import {
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
 import * as strings from "HelpDeskClientWebPartStrings";
-import HelpDeskClient from "./components/HelpDeskClient";
-import { IHelpDeskClientProps } from "./components/IHelpDeskClientProps";
+import App from "./components/app";
 import { sp } from "@pnp/sp";
+import { IAppProps } from "./components/app/IAppProps";
 
 export interface IHelpDeskClientWebPartProps {
   description: string;
@@ -27,10 +27,10 @@ export default class HelpDeskClientWebPart extends BaseClientSideWebPart<
   }
 
   public render(): void {
-    const element: React.ReactElement<IHelpDeskClientProps> = React.createElement(
-      HelpDeskClient,
+    const element: React.ReactElement<IAppProps> = React.createElement(
+      App,
       {
-        description: this.properties.description
+       
       }
     );
 
