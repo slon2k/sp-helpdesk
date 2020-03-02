@@ -1,3 +1,3 @@
-import * as api from "./api.service";
+import ApiService from "./api.service";
 
-export default api;
+export default ApiService;

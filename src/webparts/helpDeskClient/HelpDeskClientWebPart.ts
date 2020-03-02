@@ -11,9 +11,10 @@ import * as strings from "HelpDeskClientWebPartStrings";
 import App from "./components/app";
 import { sp } from "@pnp/sp";
 import { IAppProps } from "./components/app/IAppProps";
+import ApiService from "@src/services/api";
 
 export interface IHelpDeskClientWebPartProps {
-  description: string;
+  listTitle: string;
 }
 
 export default class HelpDeskClientWebPart extends BaseClientSideWebPart<
@@ -24,15 +25,13 @@ export default class HelpDeskClientWebPart extends BaseClientSideWebPart<
     sp.setup({
       spfxContext: this.context
     });
+    ApiService.Init(this.properties.listTitle);
   }
 
   public render(): void {
-    const element: React.ReactElement<IAppProps> = React.createElement(
-      App,
-      {
-       
-      }
-    );
+    const element: React.ReactElement<IAppProps> = React.createElement(App, {
+      listTitle: this.properties.listTitle
+    });
 
     ReactDom.render(element, this.domElement);
   }
@@ -56,8 +55,8 @@ export default class HelpDeskClientWebPart extends BaseClientSideWebPart<
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField("description", {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField("listTitle", {
+                  label: "List title"
                 })
               ]
             }

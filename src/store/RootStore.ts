@@ -6,8 +6,8 @@ import UserStore from "./UserStore";
 configure({ enforceActions: "always", isolateGlobalState: true });
 
 export class RootStore {
-  userStore: UserStore;
-  ticketStore: TicketStore;
+  public readonly userStore: UserStore;
+  public readonly ticketStore: TicketStore;
 
   constructor() {
     this.userStore = new UserStore(this);

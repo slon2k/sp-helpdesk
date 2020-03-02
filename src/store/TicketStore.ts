@@ -1,7 +1,7 @@
 import { RootStore } from "./RootStore";
 
 export default class TicketStore {
-  rootStore: RootStore;
+  private rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;

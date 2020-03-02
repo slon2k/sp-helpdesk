@@ -1,3 +1,3 @@
 export interface IHelpDeskClientProps {
-  description: string;
+  listTitle: string;
 }

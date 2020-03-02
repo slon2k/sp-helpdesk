@@ -4,39 +4,44 @@ import "@pnp/sp/lists";
 import "@pnp/sp/items";
 import "@pnp/sp/site-users";
 
-const LIST_TITLE = "Helpdesk";
+export default class ApiService {
+  private static listTitle: string;
 
-export const User = {
-  getCurrentUser: async () => await sp.web.currentUser.get()
-};
+  public static Init(listTitle: string) {
+    this.listTitle = listTitle;
+  }
 
-export const Tickets = {
-  getList: async () => {
-    const list = sp.web.lists.getByTitle(LIST_TITLE);
+  public static async GetTickets(): Promise<any> {
+    const list = sp.web.lists.getByTitle(this.listTitle);
     return await list.items
       .select("Id", "Title", "Status", "Author/Id, Author/Title")
       .expand("Author")
       .getAll();
-  },
-  getListForAuthor: async (id: number) => {
-    const list = sp.web.lists.getByTitle(LIST_TITLE);
+  }
+
+  public static async GetTicketsForAuthor(id: number): Promise<any> {
+    const list = sp.web.lists.getByTitle(this.listTitle);
     return await list.items
       .filter(`AuthorId eq ${id}`)
       .select("Id", "Title", "Status", "Author/Id, Author/Title")
       .expand("Author")
       .getAll();
-  },
-  getItem: async (id: number) => {
-    const list = sp.web.lists.getByTitle(LIST_TITLE);
+  }
+
+  public static async GetTicket(id: number): Promise<any> {
+    const list = sp.web.lists.getByTitle(this.listTitle);
     return await list.items
       .getById(id)
       .select("Title", "Comments", "Status", "EditorId", "AuthorId", "Versions")
       .expand("Versions")
       .get();
-  },
-  addItem: async (form) => {
-    return await sp.web.lists
-      .getByTitle(LIST_TITLE)
-      .items.add(form);
   }
-};
+
+  public static async GetCurrentUser(): Promise<any> {
+    return await sp.web.currentUser.get();
+  }
+
+  public static async AddTicket(ticket: any) {
+    return await sp.web.lists.getByTitle(this.listTitle).items.add(ticket);
+  }
+}
