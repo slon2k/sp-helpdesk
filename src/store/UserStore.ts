@@ -2,6 +2,7 @@ import { RootStore } from "./RootStore";
 import { IUser } from "@src/models/IUser";
 import { observable, action, runInAction } from "mobx";
 import api from "@src/services/api";
+import { map } from "@src/models/Mappings";
 
 export default class UserStore {
   private rootStore: RootStore;
@@ -27,12 +28,7 @@ export default class UserStore {
     this.setLoadingUser(true);
     try {
       const res = await api.GetCurrentUser();
-      console.log(res);
-      const { Id, Title } = res;
-      const user: IUser = {
-        Id,
-        Title
-      };
+      const user = map.user(res);
       runInAction(() => {
         this.setLoadingUser(false);
         this.setUser(user);

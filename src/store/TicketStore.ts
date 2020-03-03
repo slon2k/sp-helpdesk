@@ -1,7 +1,8 @@
 import { RootStore } from "./RootStore";
-import { observable, reaction, action, runInAction } from "mobx";
+import { observable, reaction, action, runInAction, computed } from "mobx";
 import { ITicket } from "@src/models/ITicket";
 import api from "@src/services/api";
+import { map } from "@src/models/Mappings";
 
 export default class TicketStore {
   private rootStore: RootStore;
@@ -10,7 +11,7 @@ export default class TicketStore {
     this.tickets = new Map<number, ITicket>();
     this.ticket = undefined;
     this.loadingTickets = false;
-  }
+  };
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
@@ -20,6 +21,11 @@ export default class TicketStore {
   @observable tickets: Map<number, ITicket>;
   @observable ticket: ITicket;
   @observable loadingTickets: boolean;
+  @computed get ticketsToList(): ITicket[] {
+    const tickets: ITicket[] = [];
+    this.tickets.forEach(item => tickets.push(item));
+    return tickets;
+  } 
 
   @action setLoadingTickets = (value: boolean) => (this.loadingTickets = value);
 
@@ -40,11 +46,16 @@ export default class TicketStore {
 
   @action loadTickets = async () => {
     this.setLoadingTickets(true);
-    console.log("loading tickets")
+    console.log("loading tickets");
     try {
       const res = await api.GetTickets();
-      console.log(res);
-      runInAction(() => this.setLoadingTickets(false));
+      runInAction(() => {
+        res.forEach(item => {
+          const ticket = map.ticket(item);
+          this.tickets.set(ticket.Id, ticket);
+        });
+        this.setLoadingTickets(false);
+      });
     } catch (error) {
       console.log(error);
       runInAction(() => this.setLoadingTickets(false));
