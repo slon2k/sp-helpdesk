@@ -1,5 +1,6 @@
 import { IUser } from "./IUser";
 import { ITicket } from "./ITicket";
+import { IVersion } from "./IVersion";
 
 export const map = {
   user: (item: any): IUser => {
@@ -32,5 +33,24 @@ export const map = {
     };
     console.log("map to ticket", ticket);
     return ticket;
+  }, 
+  versions: (items: any[]) => {
+    const versions: IVersion[] = [];
+    let previousStatus: string = "";
+    for (let index = 0; index < items.length; index++) {
+      const item = items[index];
+      const { VersionId, Modified, Editor: {Id: EditorId, Title: EditorTitle}, Status, Comments } = item;
+      const version: IVersion = {
+        VersionId, 
+        Modified, 
+        Editor: {Id: EditorId, Title: EditorTitle}, 
+        Status,
+        StatusChanging: Status !== previousStatus, 
+        Comments
+      };
+      versions.push(version);
+      previousStatus = Status;      
+    }
+    return versions;
   }
 };

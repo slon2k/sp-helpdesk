@@ -3,7 +3,7 @@ import { observable, reaction, action, runInAction, computed } from "mobx";
 import { ITicket } from "@src/models/ITicket";
 import api from "@src/services/api";
 import { map } from "@src/models/Mappings";
-import { IComment } from "@src/models/IComment";
+import { IVersion } from "@src/models/IVersion";
 
 export default class TicketStore {
   private rootStore: RootStore;
@@ -11,7 +11,9 @@ export default class TicketStore {
   @action init = () => {
     this.tickets = new Map<number, ITicket>();
     this.ticket = undefined;
+    this.versions = [];
     this.loadingTickets = false;
+    this.loadingTicket = false;
   };
 
   constructor(rootStore: RootStore) {
@@ -21,8 +23,10 @@ export default class TicketStore {
 
   @observable tickets: Map<number, ITicket>;
   @observable ticket: ITicket;
-  @observable comments: IComment[];
+  @observable versions: IVersion[];
   @observable loadingTickets: boolean;
+  @observable loadingTicket: boolean;
+  
   @computed get ticketsToList(): ITicket[] {
     const tickets: ITicket[] = [];
     this.tickets.forEach(item => tickets.push(item));
@@ -32,7 +36,11 @@ export default class TicketStore {
   @action setTicket = (ticket: ITicket) => (this.ticket = ticket);
 
   @action setLoadingTickets = (value: boolean) => (this.loadingTickets = value);
+  
+  @action setLoadingTicket = (value: boolean) => (this.loadingTicket = value);
 
+  @action setVersions = (versions: IVersion[]) => (this.versions = versions);
+  
   @action loadTicketsForCurrentUser = async () => {
     const user = this.rootStore.userStore.user;
     if (user) {
@@ -65,4 +73,21 @@ export default class TicketStore {
       runInAction(() => this.setLoadingTickets(false));
     }
   };
+
+  @action loadTicket = async (id: number) => {
+    this.setLoadingTicket(true);
+    console.log("loading ticket");
+    try {
+      const ticket = await api.GetTicket(id);
+      const { versions } = ticket;
+      runInAction(() => {
+        this.setTicket(map.ticket(ticket));
+        this.setVersions(map.versions(versions));
+        this.setLoadingTicket(false);
+      });
+    } catch (error) {
+      console.log(error);
+      runInAction(() => this.setLoadingTicket(false));
+    }
+  }
 }

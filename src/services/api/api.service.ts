@@ -35,7 +35,8 @@ export default class ApiService {
         "Status",
         "Created",
         "Modified",
-        "Author/Id, Author/Title"
+        "Author/Id",
+        "Author/Title"
       )
       .expand("Author")
       .getAll();
