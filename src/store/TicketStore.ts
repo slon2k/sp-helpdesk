@@ -3,6 +3,7 @@ import { observable, reaction, action, runInAction, computed } from "mobx";
 import { ITicket } from "@src/models/ITicket";
 import api from "@src/services/api";
 import { map } from "@src/models/Mappings";
+import { IComment } from "@src/models/IComment";
 
 export default class TicketStore {
   private rootStore: RootStore;
@@ -20,12 +21,15 @@ export default class TicketStore {
 
   @observable tickets: Map<number, ITicket>;
   @observable ticket: ITicket;
+  @observable comments: IComment[];
   @observable loadingTickets: boolean;
   @computed get ticketsToList(): ITicket[] {
     const tickets: ITicket[] = [];
     this.tickets.forEach(item => tickets.push(item));
     return tickets;
-  } 
+  }
+
+  @action setTicket = (ticket: ITicket) => (this.ticket = ticket);
 
   @action setLoadingTickets = (value: boolean) => (this.loadingTickets = value);
 
@@ -48,9 +52,9 @@ export default class TicketStore {
     this.setLoadingTickets(true);
     console.log("loading tickets");
     try {
-      const res = await api.GetTickets();
+      const tickets = await api.GetTickets();
       runInAction(() => {
-        res.forEach(item => {
+        tickets.forEach((item: any) => {
           const ticket = map.ticket(item);
           this.tickets.set(ticket.Id, ticket);
         });

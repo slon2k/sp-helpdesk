@@ -10,6 +10,7 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
   const { loadUser } = Store.userStore;
   const { loadTickets } = Store.ticketStore;
+
   return (
     <div>
       <h1>App!</h1>
@@ -25,6 +26,9 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
       </button>
       <button onClick={loadTickets}>
         store: get tickets
+      </button>      
+      <button onClick={() => ApiService.GetTicket(2).then(console.log)}>
+        store: get ticket
       </button>
       <User />
       <Tickets />

@@ -14,7 +14,14 @@ export default class ApiService {
 
   public static async GetTickets(): Promise<any> {
     return await this.list.items
-      .select("Id", "Title", "Status", "Created", "Edited", "Author/Id, Author/Title")
+      .select(
+        "Id",
+        "Title",
+        "Status",
+        "Created",
+        "Modified",
+        "Author/Id, Author/Title"
+      )
       .expand("Author")
       .getAll();
   }
@@ -22,7 +29,14 @@ export default class ApiService {
   public static async GetTicketsForAuthor(id: number): Promise<any> {
     return await this.list.items
       .filter(`AuthorId eq ${id}`)
-      .select("Id", "Title", "Status", "Created", "Edited", "Author/Id, Author/Title")
+      .select(
+        "Id",
+        "Title",
+        "Status",
+        "Created",
+        "Modified",
+        "Author/Id, Author/Title"
+      )
       .expand("Author")
       .getAll();
   }
