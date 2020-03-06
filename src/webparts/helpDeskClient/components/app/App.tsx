@@ -5,6 +5,7 @@ import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
 import User from "../user";
 import Tickets from "../tickets";
+import { map } from "@src/models/Mappings";
 
 const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
@@ -27,9 +28,10 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
       <button onClick={loadTickets}>
         store: get tickets
       </button>      
-      <button onClick={() => ApiService.GetTicket(2).then(console.log)}>
+      <button onClick={() => ApiService.GetTicket(2).then(v => map.versions(v.Versions)).then(console.log)}>
         store: get ticket
       </button>
+      <button >get versions</button>
       <User />
       <Tickets />
     </div>

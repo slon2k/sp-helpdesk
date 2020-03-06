@@ -35,15 +35,16 @@ export const map = {
     return ticket;
   }, 
   versions: (items: any[]) => {
+    console.log("mapping start", items);
     const versions: IVersion[] = [];
     let previousStatus: string = "";
-    for (let index = 0; index < items.length; index++) {
+    for (let index = items.length - 1; index >= 0; index--) {
       const item = items[index];
-      const { VersionId, Modified, Editor: {Id: EditorId, Title: EditorTitle}, Status, Comments } = item;
+      const { VersionId, Modified, Editor: { LookupId: EditorId, LookupValue: EditorTitle }, Status, Comments } = item;
       const version: IVersion = {
         VersionId, 
         Modified, 
-        Editor: {Id: EditorId, Title: EditorTitle}, 
+        Editor: { Id: EditorId, Title: EditorTitle }, 
         Status,
         StatusChanging: Status !== previousStatus, 
         Comments
@@ -51,6 +52,7 @@ export const map = {
       versions.push(version);
       previousStatus = Status;      
     }
+    console.log("mapping to versions", versions);
     return versions;
   }
 };
