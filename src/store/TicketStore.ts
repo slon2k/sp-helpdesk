@@ -35,6 +35,8 @@ export default class TicketStore {
 
   @action setTicket = (ticket: ITicket) => (this.ticket = ticket);
 
+  @action addTicket = (ticket: ITicket) => (this.tickets.set(ticket.Id, ticket));
+
   @action setLoadingTickets = (value: boolean) => (this.loadingTickets = value);
   
   @action setLoadingTicket = (value: boolean) => (this.loadingTicket = value);
@@ -64,7 +66,7 @@ export default class TicketStore {
       runInAction(() => {
         tickets.forEach((item: any) => {
           const ticket = map.ticket(item);
-          this.tickets.set(ticket.Id, ticket);
+          this.addTicket(ticket);
         });
         this.setLoadingTickets(false);
       });
