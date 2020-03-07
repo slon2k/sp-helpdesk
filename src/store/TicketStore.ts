@@ -5,6 +5,7 @@ import api from "@src/services/api";
 import { map } from "@src/models/Mappings";
 import { IVersion } from "@src/models/IVersion";
 import { ITicketCreate } from "@src/models/ITicketCreate";
+import { ITicketUpdate } from "@src/models/ITicketUpdate";
 
 export default class TicketStore {
   private rootStore: RootStore;
@@ -109,6 +110,18 @@ export default class TicketStore {
     } catch (error) {
       console.log(error);
       runInAction(() => this.setLoadingTicket(false));      
+    }
+  }
+
+  @action updateTicket = async (ticket: ITicketUpdate) => {
+    this.setLoadingTicket(true);
+    try {
+      const res = await api.UpdateTicket(ticket);
+      this.loadTicket(ticket.Id);
+      console.log("ticket updated");
+    } catch (error) {
+      console.log(error);
+      runInAction(() => this.setLoadingTicket(false));       
     }
   }
 }

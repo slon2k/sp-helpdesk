@@ -5,6 +5,7 @@ import "@pnp/sp/items";
 import "@pnp/sp/site-users";
 import { IList } from "@pnp/sp/lists";
 import { ITicketCreate } from "@src/models/ITicketCreate";
+import { ITicketUpdate } from "@src/models/ITicketUpdate";
 
 export default class ApiService {
   private static list: IList;
@@ -57,5 +58,9 @@ export default class ApiService {
 
   public static async AddTicket(ticket: ITicketCreate) {
     return await this.list.items.add(ticket);
+  }
+
+  public static async UpdateTicket(ticket: ITicketUpdate) {
+    return await this.list.items.getById(ticket.Id).update(ticket);
   }
 }
