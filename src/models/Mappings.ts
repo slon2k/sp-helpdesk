@@ -11,7 +11,7 @@ export const map = {
     };
     return user;
   },
-  ticket: (item: any): ITicket => {
+  ticketWithAuthor: (item: any): ITicket => {
     const {
       Id,
       Title,
@@ -32,6 +32,26 @@ export const map = {
       Editor
     };
     console.log("map to ticket", ticket);
+    return ticket;
+  },
+  ticket: (item: any) : ITicket => {
+    const {
+      Id,
+      Title,
+      Created,
+      Modified,
+      Status
+    } = item;
+
+    const ticket: ITicket = {
+      Id,
+      Title,
+      Created,
+      Status,
+      Modified,
+      Author: undefined,
+      Editor: undefined
+    };
     return ticket;
   },
   ticketFromVersion: (item: any) => {

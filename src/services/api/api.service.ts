@@ -4,6 +4,7 @@ import "@pnp/sp/lists";
 import "@pnp/sp/items";
 import "@pnp/sp/site-users";
 import { IList } from "@pnp/sp/lists";
+import { ITicketCreate } from "@src/models/ITicketCreate";
 
 export default class ApiService {
   private static list: IList;
@@ -54,7 +55,7 @@ export default class ApiService {
     return await sp.web.currentUser.get();
   }
 
-  public static async AddTicket(ticket: any) {
+  public static async AddTicket(ticket: ITicketCreate) {
     return await this.list.items.add(ticket);
   }
 }

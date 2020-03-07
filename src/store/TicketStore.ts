@@ -4,6 +4,7 @@ import { ITicket } from "@src/models/ITicket";
 import api from "@src/services/api";
 import { map } from "@src/models/Mappings";
 import { IVersion } from "@src/models/IVersion";
+import { ITicketCreate } from "@src/models/ITicketCreate";
 
 export default class TicketStore {
   private rootStore: RootStore;
@@ -65,7 +66,7 @@ export default class TicketStore {
       const tickets = await api.GetTickets();
       runInAction(() => {
         tickets.forEach((item: any) => {
-          const ticket = map.ticket(item);
+          const ticket = map.ticketWithAuthor(item);
           this.addTicket(ticket);
         });
         this.setLoadingTickets(false);
@@ -80,12 +81,14 @@ export default class TicketStore {
     this.setLoadingTicket(true);
     console.log("loading ticket");
     try {
-      const ticket = await api.GetTicket(id);
-      console.log(ticket);
-      const { Versions } = ticket;
+      const item = await api.GetTicket(id);
+      console.log(item);
+      const { Versions } = item;
       console.log(Versions);
       runInAction(() => {
-        this.setTicket(map.ticketFromVersion(Versions[0]));
+        const ticket = map.ticketFromVersion(Versions[0]);
+        this.setTicket(ticket);
+        this.addTicket(ticket);
         this.setVersions(map.versions(Versions));
         this.setLoadingTicket(false);
         console.log('versions: ', this.versions);
@@ -93,6 +96,19 @@ export default class TicketStore {
     } catch (error) {
       console.log(error);
       runInAction(() => this.setLoadingTicket(false));
+    }
+  }
+
+  @action createTicket = async (ticket: ITicketCreate) => {
+    this.setLoadingTicket(true);
+    try {
+      const res = await api.AddTicket(ticket);
+      const newTicket = {...map.ticket(res.data), Author: this.rootStore.userStore.user};
+      console.log(newTicket);
+      runInAction(() => this.addTicket(newTicket));
+    } catch (error) {
+      console.log(error);
+      runInAction(() => this.setLoadingTicket(false));      
     }
   }
 }

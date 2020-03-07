@@ -10,7 +10,7 @@ import { map } from "@src/models/Mappings";
 const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
   const { loadUser } = Store.userStore;
-  const { loadTickets, loadTicket } = Store.ticketStore;
+  const { loadTickets, loadTicket, createTicket } = Store.ticketStore;
 
   return (
     <div>
@@ -32,6 +32,7 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
         store: get ticket
       </button>
       <button onClick={() => loadTicket(2)}>load ticket</button>
+      <button onClick={() => createTicket({Title: "New ticket"})}>add ticket</button>
       <User />
       <Tickets />
     </div>
