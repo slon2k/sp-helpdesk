@@ -124,4 +124,19 @@ export default class TicketStore {
       runInAction(() => this.setLoadingTicket(false));       
     }
   }
+
+  @action deleteTicket = async (id: number) => {
+    this.setLoadingTicket(true);
+    try {
+      const res = await api.DeleteTicket(id);
+      runInAction(() => {
+        this.tickets.delete(id);
+        this.setLoadingTicket(false);
+      });
+      console.log("ticket deleted");
+    } catch (error) {
+      console.log(error);
+      runInAction(() => this.setLoadingTicket(false));       
+    }    
+  }
 }

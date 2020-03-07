@@ -63,4 +63,8 @@ export default class ApiService {
   public static async UpdateTicket(ticket: ITicketUpdate) {
     return await this.list.items.getById(ticket.Id).update(ticket);
   }
+
+  public static async DeleteTicket(id: number) {
+    return await this.list.items.getById(id).delete();
+  }
 }
