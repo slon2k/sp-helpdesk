@@ -10,7 +10,7 @@ import { map } from "@src/models/Mappings";
 const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
   const { loadUser } = Store.userStore;
-  const { loadTickets } = Store.ticketStore;
+  const { loadTickets, loadTicket } = Store.ticketStore;
 
   return (
     <div>
@@ -31,7 +31,7 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
       <button onClick={() => ApiService.GetTicket(2).then(v => map.versions(v.Versions)).then(console.log)}>
         store: get ticket
       </button>
-      <button >get versions</button>
+      <button onClick={() => loadTicket(2)}>load ticket</button>
       <User />
       <Tickets />
     </div>

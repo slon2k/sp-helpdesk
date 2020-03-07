@@ -33,6 +33,28 @@ export const map = {
     };
     console.log("map to ticket", ticket);
     return ticket;
+  },
+  ticketFromVersion: (item: any) => {
+    const {
+      ID,
+      Title,
+      Created,
+      Modified,
+      Status,
+      Author: { LookupId: AuthorId, LookupValue: AuthorTitle },
+      Editor: { LookupId: EditorId, LookupValue: EditorTitle }
+    } = item;
+    const ticket: ITicket = {
+      Id: ID,
+      Title,
+      Created,
+      Status,
+      Modified,
+      Author: { Id: AuthorId, Title: AuthorTitle },
+      Editor: { Id: EditorId, Title: EditorTitle}
+    };
+    console.log("map to ticket", ticket);
+    return ticket;    
   }, 
   versions: (items: any[]) => {
     console.log("mapping start", items);

@@ -79,11 +79,14 @@ export default class TicketStore {
     console.log("loading ticket");
     try {
       const ticket = await api.GetTicket(id);
-      const { versions } = ticket;
+      console.log(ticket);
+      const { Versions } = ticket;
+      console.log(Versions);
       runInAction(() => {
-        this.setTicket(map.ticket(ticket));
-        this.setVersions(map.versions(versions));
+        this.setTicket(map.ticketFromVersion(Versions[0]));
+        this.setVersions(map.versions(Versions));
         this.setLoadingTicket(false);
+        console.log('versions: ', this.versions);
       });
     } catch (error) {
       console.log(error);
