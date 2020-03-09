@@ -7,12 +7,12 @@ const User = () => {
   const { user } = context.userStore;
 
   if (!user) {
-    return <div>User undefined</div>
+    return <div>User undefined</div>;
   }
 
   return (
     <div>
-      <h2>Title: {user.Title}</h2>
+      <h3>{user.Title}</h3>
     </div>
   );
 };

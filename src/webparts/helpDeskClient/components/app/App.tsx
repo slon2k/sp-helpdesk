@@ -3,14 +3,14 @@ import { IAppProps } from "./IAppProps";
 import ApiService from "@src/services/api";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
-import User from "../user";
-import Tickets from "../tickets";
-import { map } from "@src/models/Mappings";
+import AppHeader from "../app-header";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HomePage, CreatePage, DetailsPage } from "../../pages";
 
 const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
   const { loadUser } = Store.userStore;
-  const { loadTickets, loadTicket, createTicket } = Store.ticketStore;
+  const { loadTickets } = Store.ticketStore;
   const { setAppLoaded, isLoadingApp } = Store.applicationStore;
 
   React.useEffect(() => {
@@ -31,33 +31,18 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
   }
 
   return (
-    <div>
-      <h1>App!</h1>
-      <h2>title: {listTitle}</h2>
-      <button onClick={() => ApiService.GetCurrentUser().then(console.log)}>
-        get user
-      </button>
-      <button onClick={() => ApiService.GetTickets().then(console.log)}>
-        get tickets
-      </button>
-      <button onClick={loadUser}>store: get user from sp</button>
-      <button onClick={loadTickets}>store: get tickets</button>
-      <button
-        onClick={() =>
-          ApiService.GetTicket(2)
-            .then(v => map.versions(v.Versions))
-            .then(console.log)
-        }
-      >
-        store: get ticket
-      </button>
-      <button onClick={() => loadTicket(2)}>load ticket</button>
-      <button onClick={() => createTicket({ Title: "New ticket" })}>
-        add ticket
-      </button>
-      <User />
-      <Tickets />
-    </div>
+    <Router>
+      <AppHeader />
+      <Switch>
+        <Route path="/create" exact>
+          <CreatePage />
+        </Route>
+        <Route path="/ticket/:id" exact component={DetailsPage}></Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
