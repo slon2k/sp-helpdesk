@@ -16,6 +16,7 @@ export default class TicketStore {
     this.versions = [];
     this.loadingTickets = false;
     this.loadingTicket = false;
+    this.statusFilter = "";
   };
 
   constructor(rootStore: RootStore) {
@@ -28,6 +29,7 @@ export default class TicketStore {
   @observable versions: IVersion[];
   @observable loadingTickets: boolean;
   @observable loadingTicket: boolean;
+  @observable statusFilter: string;
 
   @computed get ticketsToList(): ITicket[] {
     const tickets: ITicket[] = [];
@@ -35,6 +37,16 @@ export default class TicketStore {
     console.log("Tickets: ", tickets);
     return tickets;
     //return tickets.sort((a, b) => a.Created.getTime() - b.Created.getTime());
+  }
+
+  @computed get filteredTickets(): ITicket[] {
+    if (this.statusFilter === "Active") {
+      return this.ticketsToList.filter(item => item.Status !== "Closed");
+    }
+    if (this.statusFilter === "Closed") {
+      return this.ticketsToList.filter(item => item.Status === "Closed");
+    }
+    return this.ticketsToList;
   }
 
   @action setTicket = (ticket: ITicket) => (this.ticket = ticket);
@@ -46,6 +58,8 @@ export default class TicketStore {
   @action setLoadingTicket = (value: boolean) => (this.loadingTicket = value);
 
   @action setVersions = (versions: IVersion[]) => (this.versions = versions);
+
+  @action setStatusFilter = (value: string) => (this.statusFilter = value);
 
   @action loadTicketsForCurrentUser = async () => {
     const user = this.rootStore.userStore.user;

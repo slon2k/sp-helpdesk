@@ -5,11 +5,11 @@ import TicketList from "../ticket-list";
 
 const Tickets = () => {
   const context = React.useContext(StoreContext);
-  const { ticketsToList } = context.ticketStore;
+  const { filteredTickets } = context.ticketStore;
   return (
     <div>
       <h3>Ticket list:</h3>
-      <TicketList tickets={ticketsToList} />
+      <TicketList tickets={filteredTickets} />
     </div>
   );
 };
