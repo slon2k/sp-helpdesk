@@ -28,23 +28,25 @@ export default class TicketStore {
   @observable versions: IVersion[];
   @observable loadingTickets: boolean;
   @observable loadingTicket: boolean;
-  
+
   @computed get ticketsToList(): ITicket[] {
     const tickets: ITicket[] = [];
     this.tickets.forEach(item => tickets.push(item));
+    console.log("Tickets: ", tickets);
     return tickets;
+    //return tickets.sort((a, b) => a.Created.getTime() - b.Created.getTime());
   }
 
   @action setTicket = (ticket: ITicket) => (this.ticket = ticket);
 
-  @action addTicket = (ticket: ITicket) => (this.tickets.set(ticket.Id, ticket));
+  @action addTicket = (ticket: ITicket) => this.tickets.set(ticket.Id, ticket);
 
   @action setLoadingTickets = (value: boolean) => (this.loadingTickets = value);
-  
+
   @action setLoadingTicket = (value: boolean) => (this.loadingTicket = value);
 
   @action setVersions = (versions: IVersion[]) => (this.versions = versions);
-  
+
   @action loadTicketsForCurrentUser = async () => {
     const user = this.rootStore.userStore.user;
     if (user) {
@@ -92,26 +94,29 @@ export default class TicketStore {
         this.addTicket(ticket);
         this.setVersions(map.versions(Versions));
         this.setLoadingTicket(false);
-        console.log('versions: ', this.versions);
+        console.log("versions: ", this.versions);
       });
     } catch (error) {
       console.log(error);
       runInAction(() => this.setLoadingTicket(false));
     }
-  }
+  };
 
   @action createTicket = async (ticket: ITicketCreate) => {
     this.setLoadingTicket(true);
     try {
       const res = await api.AddTicket(ticket);
-      const newTicket = {...map.ticket(res.data), Author: this.rootStore.userStore.user};
+      const newTicket = {
+        ...map.ticket(res.data),
+        Author: this.rootStore.userStore.user
+      };
       console.log(newTicket);
       runInAction(() => this.addTicket(newTicket));
     } catch (error) {
       console.log(error);
-      runInAction(() => this.setLoadingTicket(false));      
+      runInAction(() => this.setLoadingTicket(false));
     }
-  }
+  };
 
   @action updateTicket = async (ticket: ITicketUpdate) => {
     this.setLoadingTicket(true);
@@ -121,9 +126,9 @@ export default class TicketStore {
       console.log("ticket updated");
     } catch (error) {
       console.log(error);
-      runInAction(() => this.setLoadingTicket(false));       
+      runInAction(() => this.setLoadingTicket(false));
     }
-  }
+  };
 
   @action deleteTicket = async (id: number) => {
     this.setLoadingTicket(true);
@@ -136,7 +141,7 @@ export default class TicketStore {
       console.log("ticket deleted");
     } catch (error) {
       console.log(error);
-      runInAction(() => this.setLoadingTicket(false));       
-    }    
-  }
+      runInAction(() => this.setLoadingTicket(false));
+    }
+  };
 }

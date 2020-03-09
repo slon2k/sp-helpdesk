@@ -11,6 +11,24 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
   const { loadUser } = Store.userStore;
   const { loadTickets, loadTicket, createTicket } = Store.ticketStore;
+  const { setAppLoaded, isLoadingApp } = Store.applicationStore;
+
+  React.useEffect(() => {
+    ApiService.Init(listTitle);
+    if (listTitle !== "") {
+      loadUser()
+        .then(loadTickets)
+        .then(setAppLoaded);
+    }
+  }, [listTitle, loadUser, loadTickets, setAppLoaded]);
+
+  if (listTitle === "") {
+    return <div>Application is not configured</div>;
+  }
+
+  if (isLoadingApp) {
+    return <div>Loading data...</div>;
+  }
 
   return (
     <div>
@@ -22,17 +40,21 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
       <button onClick={() => ApiService.GetTickets().then(console.log)}>
         get tickets
       </button>
-      <button onClick={loadUser}>
-        store: get user from sp
-      </button>
-      <button onClick={loadTickets}>
-        store: get tickets
-      </button>      
-      <button onClick={() => ApiService.GetTicket(2).then(v => map.versions(v.Versions)).then(console.log)}>
+      <button onClick={loadUser}>store: get user from sp</button>
+      <button onClick={loadTickets}>store: get tickets</button>
+      <button
+        onClick={() =>
+          ApiService.GetTicket(2)
+            .then(v => map.versions(v.Versions))
+            .then(console.log)
+        }
+      >
         store: get ticket
       </button>
       <button onClick={() => loadTicket(2)}>load ticket</button>
-      <button onClick={() => createTicket({Title: "New ticket"})}>add ticket</button>
+      <button onClick={() => createTicket({ Title: "New ticket" })}>
+        add ticket
+      </button>
       <User />
       <Tickets />
     </div>
