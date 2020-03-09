@@ -7,7 +7,6 @@ const TicketList: React.FC<ITicketListProps> = ({ tickets }) => {
   console.log("Ticket list", tickets);
   return (
     <div>
-      <h3>list</h3>
       <ol>
         {tickets.map(item => (
           <li key={item.Id}>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ITicketDetailsProps } from "./ITicketDetailsProps";
+import VersionItem from "../version-item";
 
 const TicketDetails: React.FC<ITicketDetailsProps> = ({ ticket, versions }) => {
   return (
@@ -7,7 +8,9 @@ const TicketDetails: React.FC<ITicketDetailsProps> = ({ ticket, versions }) => {
       <h3>{ticket.Title}</h3>
       <ul>
         {versions.map(item => (
-          <li key={item.VersionId}>{item.Modified.toLocaleString()}</li>
+          <li key={item.VersionId}>
+            <VersionItem version={item} />
+          </li>
         ))}
       </ul>
     </div>

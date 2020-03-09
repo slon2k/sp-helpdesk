@@ -10,8 +10,6 @@ const AppHeader = () => {
       <Link to="/">Home</Link>
       <span> | </span>
       <Link to="/create">New</Link>
-      <span> | </span>
-      <Link to="/ticket/3">Ticket 3</Link>
     </div>
   );
 };
