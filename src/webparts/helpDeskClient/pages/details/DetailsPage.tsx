@@ -22,7 +22,7 @@ const DetailsPage: React.FC<RouteComponentProps<IParams>> = ({ match }) => {
   }
 
   if (ticket) {
-    return <TicketDetails ticket={ticket} versions={versions} />;
+    return <TicketDetails />;
   }
 
   return <div>Loading ticket...</div>;
