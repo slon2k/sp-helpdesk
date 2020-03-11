@@ -2,13 +2,14 @@ import * as React from "react";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
 import TicketList from "../ticket-list";
+import Filter from "../filter";
 
 const Tickets = () => {
   const context = React.useContext(StoreContext);
   const { filteredTickets } = context.ticketStore;
   return (
     <div>
-      <h3>Ticket list:</h3>
+      <Filter />
       <TicketList tickets={filteredTickets} />
     </div>
   );
