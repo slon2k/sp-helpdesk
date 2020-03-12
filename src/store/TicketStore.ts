@@ -35,8 +35,7 @@ export default class TicketStore {
     const tickets: ITicket[] = [];
     this.tickets.forEach(item => tickets.push(item));
     console.log("Tickets: ", tickets);
-    return tickets;
-    //return tickets.sort((a, b) => a.Created.getTime() - b.Created.getTime());
+    return tickets.sort((a, b) => b.Created.getTime() - a.Created.getTime());
   }
 
   @computed get filteredTickets(): ITicket[] {

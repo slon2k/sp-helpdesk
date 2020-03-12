@@ -25,9 +25,9 @@ export const map = {
     const ticket: ITicket = {
       Id,
       Title,
-      Created,
+      Created: new Date(Created),
       Status,
-      Modified,
+      Modified: new Date(Modified),
       Author: { Id: AuthorId, Title: AuthorTitle },
       Editor
     };
@@ -46,9 +46,9 @@ export const map = {
     const ticket: ITicket = {
       Id,
       Title,
-      Created,
+      Created: new Date(Created),
       Status,
-      Modified,
+      Modified: new Date(Modified),
       Author: undefined,
       Editor: undefined
     };
@@ -67,9 +67,9 @@ export const map = {
     const ticket: ITicket = {
       Id: ID,
       Title,
-      Created,
+      Created: new Date(Created),
       Status,
-      Modified,
+      Modified: new Date(Modified),
       Author: { Id: AuthorId, Title: AuthorTitle },
       Editor: { Id: EditorId, Title: EditorTitle}
     };
@@ -85,7 +85,7 @@ export const map = {
       const { VersionId, Modified, Editor: { LookupId: EditorId, LookupValue: EditorTitle }, Status, Comments } = item;
       const version: IVersion = {
         VersionId, 
-        Modified, 
+        Modified: new Date(Modified), 
         Editor: { Id: EditorId, Title: EditorTitle }, 
         Status,
         StatusChanging: Status !== previousStatus, 
