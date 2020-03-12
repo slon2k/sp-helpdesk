@@ -2,8 +2,12 @@ import * as React from "react";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
 import TicketList from "../ticket-list";
-import Filter from "../filter";
-import { Pivot, PivotItem, IPivotProps, PivotLinkSize } from 'office-ui-fabric-react/lib/Pivot';
+import {
+  Pivot,
+  PivotItem,
+  IPivotProps,
+  PivotLinkSize
+} from "office-ui-fabric-react/lib/Pivot";
 
 const Tickets = () => {
   const context = React.useContext(StoreContext);
@@ -15,11 +19,15 @@ const Tickets = () => {
           <TicketList tickets={ticketsToList} />
         </PivotItem>
         <PivotItem headerText="Active">
-          <TicketList tickets={ticketsToList.filter(item => item.Status !== "Closed")} />
+          <TicketList
+            tickets={ticketsToList.filter(item => item.Status !== "Closed")}
+          />
         </PivotItem>
         <PivotItem headerText="Closed">
-          <TicketList tickets={ticketsToList.filter(item => item.Status === "Closed")} />
-        </PivotItem>        
+          <TicketList
+            tickets={ticketsToList.filter(item => item.Status === "Closed")}
+          />
+        </PivotItem>
       </Pivot>
     </div>
   );

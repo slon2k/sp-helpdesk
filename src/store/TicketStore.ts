@@ -34,18 +34,7 @@ export default class TicketStore {
   @computed get ticketsToList(): ITicket[] {
     const tickets: ITicket[] = [];
     this.tickets.forEach(item => tickets.push(item));
-    console.log("Tickets: ", tickets);
     return tickets.sort((a, b) => b.Created.getTime() - a.Created.getTime());
-  }
-
-  @computed get filteredTickets(): ITicket[] {
-    if (this.statusFilter === "Active") {
-      return this.ticketsToList.filter(item => item.Status !== "Closed");
-    }
-    if (this.statusFilter === "Closed") {
-      return this.ticketsToList.filter(item => item.Status === "Closed");
-    }
-    return this.ticketsToList;
   }
 
   @action setTicket = (ticket: ITicket) => (this.ticket = ticket);
@@ -66,7 +55,6 @@ export default class TicketStore {
       this.setLoadingTickets(true);
       try {
         const res = await api.GetTicketsForAuthor(user.Id);
-        console.log(res);
         runInAction(() => this.setLoadingTickets(false));
       } catch (error) {
         console.log(error);
@@ -77,7 +65,6 @@ export default class TicketStore {
 
   @action loadTickets = async () => {
     this.setLoadingTickets(true);
-    console.log("loading tickets");
     try {
       const tickets = await api.GetTickets();
       runInAction(() => {

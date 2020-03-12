@@ -32,7 +32,6 @@ export default class UserStore {
       runInAction(() => {
         this.setLoadingUser(false);
         this.setUser(user);
-        console.log("user:", this.user);
       });
     } catch (error) {
       console.log(error);
