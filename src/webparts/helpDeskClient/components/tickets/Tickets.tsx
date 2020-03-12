@@ -7,7 +7,7 @@ import { Pivot, PivotItem, IPivotProps, PivotLinkSize } from 'office-ui-fabric-r
 
 const Tickets = () => {
   const context = React.useContext(StoreContext);
-  const { filteredTickets, ticketsToList } = context.ticketStore;
+  const { ticketsToList } = context.ticketStore;
   return (
     <div>
       <Pivot>
