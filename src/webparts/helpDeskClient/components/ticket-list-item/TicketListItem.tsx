@@ -8,10 +8,11 @@ import {
 } from "office-ui-fabric-react/lib/FocusZone";
 import { Icon } from "office-ui-fabric-react/lib/Icon";
 import { distance } from "@src/util/DateTime";
+import styles from "./TicketListItem.module.scss";
 
 const TicketListItem: React.FC<ITicketListItemProps> = ({ ticket }) => {
   return (
-    <div role="row">
+    <div role="row" className={styles.TicketListItem}>
       <FocusZone direction={FocusZoneDirection.horizontal}>
         <Link to={`/ticket/${ticket.Id}`}>
           <div>

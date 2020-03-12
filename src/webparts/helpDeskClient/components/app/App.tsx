@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import AppHeader from "../app-header";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { HomePage, CreatePage, DetailsPage } from "../../pages";
+import styles from "../../styles/style.module.scss";
 
 const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
@@ -32,16 +33,20 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
 
   return (
     <Router>
-      <AppHeader />
-      <Switch>
-        <Route path="/create" exact>
-          <CreatePage />
-        </Route>
-        <Route path="/ticket/:id" exact component={DetailsPage}></Route>
-        <Route path="/">
-          <HomePage />
-        </Route>
-      </Switch>
+      <div className={styles.helpDeskClient}>
+        <div className={styles.container}>
+          <AppHeader />
+          <Switch>
+            <Route path="/create" exact>
+              <CreatePage />
+            </Route>
+            <Route path="/ticket/:id" exact component={DetailsPage}></Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </div>
+      </div>
     </Router>
   );
 };
