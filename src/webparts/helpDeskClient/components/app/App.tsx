@@ -4,7 +4,7 @@ import ApiService from "@src/services/api";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
 import AppHeader from "../app-header";
-import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { HomePage, CreatePage, DetailsPage } from "../../pages";
 import styles from "../../styles/style.module.scss";
 

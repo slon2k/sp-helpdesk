@@ -1,6 +1,7 @@
 import * as React from "react";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
+import { IPersonaSharedProps, Persona, PersonaInitialsColor, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 
 const User = () => {
   const context = React.useContext(StoreContext);
@@ -12,7 +13,7 @@ const User = () => {
 
   return (
     <div>
-      <h3>{user.Title}</h3>
+      <Persona text={user.Title} size={PersonaSize.size32} />
     </div>
   );
 };

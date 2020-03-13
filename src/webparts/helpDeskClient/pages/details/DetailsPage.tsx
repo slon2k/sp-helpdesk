@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
 import TicketDetails from "../../components/ticket-details";
@@ -28,4 +28,4 @@ const DetailsPage: React.FC<RouteComponentProps<IParams>> = ({ match }) => {
   return <div>Loading ticket...</div>;
 };
 
-export default observer(DetailsPage);
+export default withRouter(observer(DetailsPage));

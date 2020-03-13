@@ -1,20 +1,28 @@
 import * as React from "react";
 import User from "../user";
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
+import { RouteComponentProps, withRouter, NavLink } from "react-router-dom";
 import styles from "./AppHeader.module.scss";
+import { CommandBarButton, IIconProps } from "office-ui-fabric-react";
 
-const AppHeader = () => {
+const AppHeader: React.FC<RouteComponentProps> = ({ location }) => {
+  const addIcon: IIconProps = { iconName: "Add" };
+  const homeIcon: IIconProps = { iconName: "Home" };
   return (
     <div className={styles.appHeader}>
-      <div>
-      <Link to="/">Home</Link>
-      <span> | </span>
-      <Link to="/create">New</Link>        
+      <div className={styles.links}>
+        <NavLink exact={true} to="/">
+          <CommandBarButton iconProps={homeIcon} text="Ticket list" />
+        </NavLink>
+        <NavLink exact={true} to="/create">
+          <CommandBarButton iconProps={addIcon} text="New item" />
+        </NavLink>
       </div>
-      <User />
+      <div className={styles.user}>
+        <User />
+      </div>
     </div>
   );
 };
 
-export default observer(AppHeader);
+export default withRouter(observer(AppHeader));

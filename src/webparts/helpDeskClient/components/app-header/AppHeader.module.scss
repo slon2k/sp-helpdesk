@@ -1,4 +1,12 @@
 .appHeader {
-    display: flex;
-    flex-direction: row; 
+  display: flex;
+  flex-direction: row;
+
+  .links {
+    background-color: transparent;
+  }
+
+  .user {
+    align-self: flex-end;
+  }
 }
