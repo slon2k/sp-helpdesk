@@ -1,12 +1,13 @@
 .appHeader {
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
 
   .links {
-    background-color: transparent;
+    align-self: center;
   }
 
   .user {
-    align-self: flex-end;
+    align-self: center;
   }
 }
