@@ -11,7 +11,7 @@ interface IParams {
 const DetailsPage: React.FC<RouteComponentProps<IParams>> = ({ match }) => {
   const { id } = match.params;
   const context = React.useContext(StoreContext);
-  const { ticket, loadingTicket, loadTicket, versions } = context.ticketStore;
+  const { ticket, loadingTicket, loadTicket } = context.ticketStore;
 
   React.useEffect(() => {
     loadTicket(parseInt(id));

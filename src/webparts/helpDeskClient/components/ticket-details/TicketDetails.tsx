@@ -3,8 +3,12 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import VersionItem from "../version-item";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
-import TextareaField from "../form/textarea";
 import { ITicketUpdate } from "@src/models/ITicketUpdate";
+import {
+  TextField,
+  DefaultButton,
+  PrimaryButton
+} from "office-ui-fabric-react";
 
 const TicketDetails: React.FC<RouteComponentProps> = ({ history }) => {
   const context = React.useContext(StoreContext);
@@ -41,6 +45,13 @@ const TicketDetails: React.FC<RouteComponentProps> = ({ history }) => {
     deleteTicket(ticket.Id).then(() => history.push("/"));
   };
 
+  const handleChange = (
+    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    text?: string
+  ): void => {
+    setComments(text || "");
+  };
+
   return (
     <div>
       <h3>{ticket.Title}</h3>
@@ -49,12 +60,29 @@ const TicketDetails: React.FC<RouteComponentProps> = ({ history }) => {
           <VersionItem version={item} />
         ))}
       </div>
-      <TextareaField
-        value={comments}
+
+      <TextField
+        placeholder="Add comments..."
+        multiline
         name="Comments"
-        onChange={e => setComments(e.target.value)}
-        placeholder="Comments"
+        value={comments}
+        onChange={handleChange}
       />
+      <br />
+      <DefaultButton onClick={() => history.push("/")}>Cancel</DefaultButton>
+      {ticket.Status !== "Closed" && (
+        <PrimaryButton onClick={handleAddComment} disabled={comments === ""}>
+          Add comments
+        </PrimaryButton>
+      )}
+
+      {ticket.Status === "Closed" && (
+        <PrimaryButton onClick={handleReopenTicket} disabled={comments === ""}>
+          Reopen ticket
+        </PrimaryButton>
+      )}
+
+{/*       <button onClick={handleReopenTicket}>Reopen ticket</button>
       <button onClick={handleAddComment}>Add comment</button>
       {ticket.Status !== "Closed" && (
         <button onClick={handleCloseTicket}>Close ticket</button>
@@ -71,6 +99,8 @@ const TicketDetails: React.FC<RouteComponentProps> = ({ history }) => {
       >
         Delete ticket
       </button>
+ */}
+
     </div>
   );
 };
