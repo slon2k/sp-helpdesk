@@ -44,13 +44,11 @@ const TicketDetails: React.FC<RouteComponentProps> = ({ history }) => {
   return (
     <div>
       <h3>{ticket.Title}</h3>
-      <ul>
+      <div>
         {versions.map(item => (
-          <li key={item.VersionId}>
-            <VersionItem version={item} />
-          </li>
+          <VersionItem version={item} />
         ))}
-      </ul>
+      </div>
       <TextareaField
         value={comments}
         name="Comments"

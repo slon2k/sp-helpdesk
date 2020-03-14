@@ -1,7 +1,7 @@
 import * as React from "react";
 import StoreContext from "@src/store";
 import { observer } from "mobx-react-lite";
-import { IPersonaSharedProps, Persona, PersonaInitialsColor, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 
 const User = () => {
   const context = React.useContext(StoreContext);

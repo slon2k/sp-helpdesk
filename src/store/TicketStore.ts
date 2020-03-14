@@ -34,7 +34,7 @@ export default class TicketStore {
   @computed get ticketsToList(): ITicket[] {
     const tickets: ITicket[] = [];
     this.tickets.forEach(item => tickets.push(item));
-    return tickets.sort((a, b) => b.Created.getTime() - a.Created.getTime());
+    return tickets.sort((a, b) => b.Modified.getTime() - a.Modified.getTime());
   }
 
   @action setTicket = (ticket: ITicket) => (this.ticket = ticket);
@@ -82,19 +82,15 @@ export default class TicketStore {
 
   @action loadTicket = async (id: number) => {
     this.setLoadingTicket(true);
-    console.log("loading ticket");
     try {
       const item = await api.GetTicket(id);
-      console.log(item);
       const { Versions } = item;
-      console.log(Versions);
       runInAction(() => {
         const ticket = map.ticketFromVersion(Versions[0]);
         this.setTicket(ticket);
         this.addTicket(ticket);
         this.setVersions(map.versions(Versions));
         this.setLoadingTicket(false);
-        console.log("versions: ", this.versions);
       });
     } catch (error) {
       console.log(error);
@@ -110,7 +106,6 @@ export default class TicketStore {
         ...map.ticket(res.data),
         Author: this.rootStore.userStore.user
       };
-      console.log(newTicket);
       runInAction(() => this.addTicket(newTicket));
     } catch (error) {
       console.log(error);

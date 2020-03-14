@@ -69,7 +69,6 @@ export const map = {
     return ticket;
   },
   versions: (items: any[]) => {
-    console.log("mapping start", items);
     const versions: IVersion[] = [];
     let previousStatus: string = "";
     for (let index = items.length - 1; index >= 0; index--) {
