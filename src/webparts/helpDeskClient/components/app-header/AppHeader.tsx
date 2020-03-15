@@ -1,5 +1,5 @@
 import * as React from "react";
-import User from "../user";
+import User from "@src/components/user";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps, withRouter, NavLink } from "react-router-dom";
 import styles from "./AppHeader.module.scss";

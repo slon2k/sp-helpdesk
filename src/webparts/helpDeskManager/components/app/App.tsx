@@ -1,12 +1,11 @@
 import * as React from "react";
 import { IAppProps } from "./IAppProps";
-import ApiService from "@src/services/api";
 import StoreContext from "@src/store";
+import ApiService from "@src/services/api";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import styles from "@src/styles/style.module.scss";
 import { observer } from "mobx-react-lite";
 import AppHeader from "../app-header";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import { HomePage, CreatePage, DetailsPage } from "../../pages";
-import styles from "../../styles/style.module.scss";
 
 const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
@@ -33,18 +32,10 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
 
   return (
     <Router>
-      <div className={styles.helpDeskClient}>
+      <div className={styles.helpDesk}>
         <AppHeader />
         <div className={styles.container}>
-          <Switch>
-            <Route path="/create" exact>
-              <CreatePage />
-            </Route>
-            <Route path="/ticket/:id" exact component={DetailsPage}></Route>
-            <Route path="/">
-              <HomePage />
-            </Route>
-          </Switch>
+          <h2>Manager App</h2>
         </div>
       </div>
     </Router>

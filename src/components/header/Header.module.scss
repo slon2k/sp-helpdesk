@@ -1,0 +1,12 @@
+.header {
+  background-color: rgb(244, 244, 244);
+  padding: 10px;
+
+  .headerContainer {
+    max-width: 500px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}

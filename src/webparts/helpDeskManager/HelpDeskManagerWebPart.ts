@@ -1,29 +1,37 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import { Version } from "@microsoft/sp-core-library";
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+} from "@microsoft/sp-property-pane";
+import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
-import * as strings from 'HelpDeskManagerWebPartStrings';
-import HelpDeskManager from './components/HelpDeskManager';
-import { IHelpDeskManagerProps } from './components/IHelpDeskManagerProps';
+import * as strings from "HelpDeskManagerWebPartStrings";
+import App from "./components/app";
+import { sp } from "@pnp/sp";
+import { IAppProps } from "./components/app/IAppProps";
+import ApiService from "@src/services/api";
 
 export interface IHelpDeskManagerWebPartProps {
-  description: string;
+  listTitle: string;
 }
 
-export default class HelpDeskManagerWebPart extends BaseClientSideWebPart <IHelpDeskManagerWebPartProps> {
+export default class HelpDeskManagerWebPart extends BaseClientSideWebPart<
+  IHelpDeskManagerWebPartProps
+> {
+  public async onInit(): Promise<void> {
+    await super.onInit();
+    sp.setup({
+      spfxContext: this.context
+    });
+    ApiService.Init(this.properties.listTitle);
+  }
 
   public render(): void {
-    const element: React.ReactElement<IHelpDeskManagerProps> = React.createElement(
-      HelpDeskManager,
-      {
-        description: this.properties.description
-      }
-    );
+    const element: React.ReactElement<IAppProps> = React.createElement(App, {
+      listTitle: this.properties.listTitle
+    });
 
     ReactDom.render(element, this.domElement);
   }
@@ -33,7 +41,7 @@ export default class HelpDeskManagerWebPart extends BaseClientSideWebPart <IHelp
   }
 
   protected get dataVersion(): Version {
-    return Version.parse('1.0');
+    return Version.parse("1.0");
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
@@ -47,8 +55,8 @@ export default class HelpDeskManagerWebPart extends BaseClientSideWebPart <IHelp
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField("listTitle", {
+                  label: "List title"
                 })
               ]
             }

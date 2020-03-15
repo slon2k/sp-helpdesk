@@ -1,0 +1,18 @@
+.helpDesk {
+    * {
+      box-sizing: border-box;
+    }
+  
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+      text-decoration: none;
+      color: inherit;
+    }
+  
+    .container {
+      max-width: 500px;
+      margin: 0px auto;
+    }
+  }
