@@ -68,21 +68,25 @@ const TicketDetails: React.FC<RouteComponentProps> = ({ history }) => {
         value={comments}
         onChange={handleChange}
       />
-      <br />
-      <DefaultButton onClick={() => history.push("/")}>Cancel</DefaultButton>
-      {ticket.Status !== "Closed" && (
-        <PrimaryButton onClick={handleAddComment} disabled={comments === ""}>
-          Add comments
-        </PrimaryButton>
-      )}
+      <div style={{ marginTop: 20, marginBottom: 20 }}>
+        <DefaultButton onClick={() => history.push("/")}>Cancel</DefaultButton>
+        {ticket.Status !== "Closed" && (
+          <PrimaryButton onClick={handleAddComment} disabled={comments === ""}>
+            Add comments
+          </PrimaryButton>
+        )}
 
-      {ticket.Status === "Closed" && (
-        <PrimaryButton onClick={handleReopenTicket} disabled={comments === ""}>
-          Reopen ticket
-        </PrimaryButton>
-      )}
+        {ticket.Status === "Closed" && (
+          <PrimaryButton
+            onClick={handleReopenTicket}
+            disabled={comments === ""}
+          >
+            Reopen ticket
+          </PrimaryButton>
+        )}
+      </div>
 
-{/*       <button onClick={handleReopenTicket}>Reopen ticket</button>
+      {/*       <button onClick={handleReopenTicket}>Reopen ticket</button>
       <button onClick={handleAddComment}>Add comment</button>
       {ticket.Status !== "Closed" && (
         <button onClick={handleCloseTicket}>Close ticket</button>
@@ -100,7 +104,6 @@ const TicketDetails: React.FC<RouteComponentProps> = ({ history }) => {
         Delete ticket
       </button>
  */}
-
     </div>
   );
 };

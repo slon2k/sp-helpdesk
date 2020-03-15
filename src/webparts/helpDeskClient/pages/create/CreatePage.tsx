@@ -43,9 +43,10 @@ const CreatePage: React.FC<RouteComponentProps> = ({ history }) => {
         placeholder="Add comments..."
         onChange={(e, text) => setComments(text)}
       />
-      <br />
-      <DefaultButton onClick={() => history.push("/")}>Cancel</DefaultButton>
-      <PrimaryButton onClick={handleCreateTicket} disabled={title === ""}>Create ticket</PrimaryButton>
+      <div style={{marginTop: 20, marginBottom: 20}}>
+        <DefaultButton onClick={() => history.push("/")}>Cancel</DefaultButton>
+        <PrimaryButton onClick={handleCreateTicket} disabled={title === ""}>Create ticket</PrimaryButton>        
+      </div>
     </div>
   );
 };
