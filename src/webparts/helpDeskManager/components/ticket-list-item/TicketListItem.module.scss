@@ -1,0 +1,35 @@
+@import "~office-ui-fabric-react/dist/sass/References";
+
+.TicketListItem {
+  .item {
+    display: flex;
+    border-bottom: dotted 1px grey;
+    flex-direction: row;
+    &:hover {
+      background-color: $ms-color-neutralLighter;
+    }
+  }
+  .status {
+    flex-grow: 0;
+  }
+  .info {
+    padding: 10px;
+    flex-grow: 1;
+  }
+  .title {
+    color: $ms-color-themePrimary;
+  }
+  .icon {
+    font-size: 30px;
+    margin: 20px;
+    &.iconRed {
+      color: red;
+    }
+    &.iconYellow {
+      color: orange;
+    }
+    &.iconGreen {
+      color: green;
+    }
+  }
+}

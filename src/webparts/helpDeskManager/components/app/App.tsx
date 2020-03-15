@@ -6,6 +6,7 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import styles from "@src/styles/style.module.scss";
 import { observer } from "mobx-react-lite";
 import AppHeader from "../app-header";
+import { DetailsPage, HomePage } from "../../pages";
 
 const App: React.FC<IAppProps> = ({ listTitle }) => {
   const Store = React.useContext(StoreContext);
@@ -35,7 +36,12 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
       <div className={styles.helpDesk}>
         <AppHeader />
         <div className={styles.container}>
-          <h2>Manager App</h2>
+        <Switch>
+            <Route path="/ticket/:id" exact component={DetailsPage}></Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
         </div>
       </div>
     </Router>
