@@ -10,16 +10,18 @@ const AppHeader: React.FC<RouteComponentProps> = ({ location }) => {
   const homeIcon: IIconProps = { iconName: "Home" };
   return (
     <div className={styles.appHeader}>
-      <div className={styles.links}>
-        <NavLink exact={true} to="/">
-          <CommandBarButton iconProps={homeIcon} text="Ticket list" />
-        </NavLink>
-        <NavLink exact={true} to="/create">
-          <CommandBarButton iconProps={addIcon} text="New item" />
-        </NavLink>
-      </div>
-      <div className={styles.user}>
-        <User />
+      <div className={styles.headerContainer}>
+        <div className={styles.links}>
+          <NavLink exact={true} to="/" className={styles.link}>
+            <CommandBarButton iconProps={homeIcon} text="Ticket list" />
+          </NavLink>
+          <NavLink exact={true} to="/create">
+            <CommandBarButton iconProps={addIcon} text="New item" />
+          </NavLink>
+        </div>
+        <div className={styles.user}>
+          <User />
+        </div>
       </div>
     </div>
   );

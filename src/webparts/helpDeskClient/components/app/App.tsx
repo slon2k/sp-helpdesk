@@ -34,8 +34,8 @@ const App: React.FC<IAppProps> = ({ listTitle }) => {
   return (
     <Router>
       <div className={styles.helpDeskClient}>
-        <div className={styles.container}>
           <AppHeader />
+        <div className={styles.container}>
           <Switch>
             <Route path="/create" exact>
               <CreatePage />
